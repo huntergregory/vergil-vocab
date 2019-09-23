@@ -5,16 +5,18 @@ class Scanner:
     def __init__(self, delimiter="\n", text=None):
         self.delimiter = delimiter
         self.text = text
+        self.current = None
         if text:
             self.set_text(text)
-        else:
-            self.current = None
 
     def set_text(self, text):
         self.text = text
         next_delimiter = self.text.find(self.delimiter)
         if next_delimiter == -1:
             self.current = self.text
+        if next_delimiter == 0:
+            self.set_text(self.text[1:])
+            return
         self.current = self.text[0:next_delimiter]
         self.text = self.text[next_delimiter + 1:]
 

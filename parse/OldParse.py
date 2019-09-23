@@ -1,9 +1,9 @@
-import requests;
-import re;
-from tqdm import trange;
+import requests
+import re
+from tqdm import trange
 
-from scan import Scanner;
-from words import Latin
+from scan.Scanner import *
+from latin import WordFactory
 
 
 def get_eclogues_url(num):
@@ -22,7 +22,6 @@ def parse_eclogues_words(num, line_start = 1, line_end = -1):
         print("no matches...")
         return False
     paragraphs = body_match.group(1)
-    print(paragraphs)
     space_regex = r"(&nbsp;)*<FONT Size=\d+>\d+</FONT>"
     no_spaces = re.sub(space_regex, "", paragraphs, flags=re.S | re.I)
     no_starting_p_tags = re.sub(r"<p", "", no_spaces)
@@ -60,19 +59,19 @@ def main(num=2):
     if not words:
         print("Couldn't find latin")
         return
-    scanner = Scanner.Scanner()
-    word_factory = Latin.WordFactory()
+    scanner = Scanner()
+    word_factory = WordFactory.WordFactory()
     latin_words = set()
     for k in trange(len(words)):
         word_text = search_for_word(words[k])
         if not word_text:
             continue
         scanner.set_text(word_text)
-        while scanner.has_next_line():
-            scanner.move_to_next_line()
+        while scanner.has_next():
+            scanner.move_to_next()
             if not scanner.current_contains(r"\[XXX\w*]\]"):
                 continue
-            latin_word = word_factory.get_word(scanner.current, scanner.get_next_line())
+            latin_word = word_factory.get_word(scanner.current, scanner.get_next())
             if latin_word:
                 latin_words.add(latin_word)
 

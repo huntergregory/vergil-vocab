@@ -1,5 +1,5 @@
 import requests
-import re
+import sys
 from tqdm import trange
 from scan.Scanner import *
 from latin import WordFactory
@@ -103,5 +103,7 @@ def main(url, line_start=0, line_end=-1):
 
 # TODO use sysout
 if __name__ == '__main__':
-    book_num = 2  # FIXME
-    main(get_eclogues_url(book_num), line_end=10)
+    book_num = int(sys.argv[1])
+    start = int(sys.argv[2])
+    end = int(sys.argv[2])
+    main(get_eclogues_url(book_num), line_start=start, line_end=end)

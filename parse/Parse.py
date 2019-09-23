@@ -105,5 +105,5 @@ def main(url, line_start=0, line_end=-1):
 if __name__ == '__main__':
     book_num = int(sys.argv[1])
     start = int(sys.argv[2])
-    end = int(sys.argv[2])
+    end = int(sys.argv[3])
     main(get_eclogues_url(book_num), line_start=start, line_end=end)

@@ -1,9 +1,8 @@
 import requests
-import re
 from tqdm import trange
 
-from scan.Scanner import *
-from latin import WordFactory
+from parse.scan.Scanner import *
+from parse.latin import WordFactory
 
 
 def get_eclogues_url(num):
